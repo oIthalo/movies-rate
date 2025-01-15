@@ -4,6 +4,7 @@ using MoviesRate.Communication.Requests;
 using MoviesRate.Communication.Response;
 using MoviesRate.Domain.Repositories;
 using MoviesRate.Domain.Repositories.User;
+using MoviesRate.Domain.Security.Criptography;
 using MoviesRate.Exception;
 using MoviesRate.Exception.Exceptions;
 
@@ -15,17 +16,20 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private readonly IWriteUserRepository _writeUserRepository;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IPasswordEncripter _passwordEncripter;
 
     public RegisterUserUseCase(
-        IReadUserRepository readUserRepository, 
-        IWriteUserRepository writeUserRepository, 
-        IMapper mapper, 
-        IUnitOfWork unitOfWork)
+        IReadUserRepository readUserRepository,
+        IWriteUserRepository writeUserRepository,
+        IMapper mapper,
+        IUnitOfWork unitOfWork,
+        IPasswordEncripter passwordEncripter)
     {
         _readUserRepository = readUserRepository;
         _writeUserRepository = writeUserRepository;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
+        _passwordEncripter = passwordEncripter;
     }
 
     public async Task<ShortUserResponse> Execute(RegisterUserRequest request)
@@ -33,6 +37,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         await Validate(request);
 
         var user = _mapper.Map<Domain.Entities.User>(request);
+        user.Password = _passwordEncripter.Encrypt(user.Password);
 
         await _writeUserRepository.Add(user);
         await _unitOfWork.Commit();
