@@ -4,14 +4,14 @@ namespace MoviesRate.Exception.Exceptions;
 
 public class ErrorOnValidationException : MoviesRateException
 {
-    private readonly IList<string> _errors;
-
     public ErrorOnValidationException(List<string> errorMessages) : base(string.Empty)
     {
-        _errors = errorMessages;
+        Errors = errorMessages;
     }
 
-    public override IList<string> GetErrorMessages() => _errors;
+    public IList<string> Errors {  get; set; }
+
+    public override IList<string> GetErrorMessages() => Errors;
 
     public override HttpStatusCode GetStatusCode() => HttpStatusCode.BadRequest;
 }
