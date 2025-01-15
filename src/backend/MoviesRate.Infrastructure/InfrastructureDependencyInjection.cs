@@ -18,10 +18,14 @@ public static class InfrastructureDependencyInjection
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        AddDbContexts(services, configuration);
         AddFluentMigrator(services, configuration);
         AddRepositories(services);
         AddPasswordEncripter(services);
+
+        if (configuration.IsUnitTestEnviroment())
+            return;
+
+        AddDbContexts(services, configuration);
     }
 
     public static void AddDbContexts(IServiceCollection services, IConfiguration configuration)
