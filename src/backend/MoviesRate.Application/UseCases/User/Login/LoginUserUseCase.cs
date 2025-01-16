@@ -3,6 +3,7 @@ using MoviesRate.Communication.Requests;
 using MoviesRate.Communication.Response;
 using MoviesRate.Domain.Repositories.User;
 using MoviesRate.Domain.Security.Criptography;
+using MoviesRate.Domain.Security.Tokens.Access;
 using MoviesRate.Exception;
 using MoviesRate.Exception.Exceptions;
 
@@ -12,16 +13,16 @@ public class LoginUserUseCase : ILoginUserUseCase
 {
     private readonly IReadUserRepository _readUserRepository;
     private readonly IPasswordEncripter _passwordEncripter;
-    private readonly IMapper _mapper;
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
 
     public LoginUserUseCase(
         IReadUserRepository readUserRepository,
         IPasswordEncripter passwordEncripter,
-        IMapper mapper)
+        IAccessTokenGenerator accessTokenGenerator)
     {
         _readUserRepository = readUserRepository;
         _passwordEncripter = passwordEncripter;
-        _mapper = mapper;
+        _accessTokenGenerator = accessTokenGenerator;
     }
 
     public async Task<ShortUserResponse> Execute(LoginUserRequest request)
@@ -32,7 +33,16 @@ public class LoginUserUseCase : ILoginUserUseCase
 
         if (user is null || !_passwordEncripter.IsValid(request.Password, user.Password)) throw new InvalidLoginException();
 
-        return _mapper.Map<ShortUserResponse>(user);
+        var token = _accessTokenGenerator.Generate(user.Identifier);
+
+        return new ShortUserResponse()
+        {
+            Name = user.Name,
+            Tokens =
+            {
+                AccessToken = token,
+            }
+        };
     }
 
     private static void Validate(LoginUserRequest request)
