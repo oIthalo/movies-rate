@@ -10,6 +10,7 @@ public class AutoMapping : Profile
     public AutoMapping()
     {
         RequestToDomain();
+        DomainToResponse();
     }
 
     public void RequestToDomain()
