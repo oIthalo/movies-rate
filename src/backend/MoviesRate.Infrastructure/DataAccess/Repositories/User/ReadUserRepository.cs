@@ -18,4 +18,12 @@ public class ReadUserRepository : IReadUserRepository
                    new { email },
                    commandType: CommandType.StoredProcedure))
                 .FirstOrDefault();
+
+    public async Task<Domain.Entities.User?> GetUserByEmail(string email) =>
+        (await _dbContext.Connection
+            .QueryAsync<Domain.Entities.User>(
+                "spGetUserByEmail",
+                new { email },
+                commandType: CommandType.StoredProcedure))
+            .FirstOrDefault();
 }
