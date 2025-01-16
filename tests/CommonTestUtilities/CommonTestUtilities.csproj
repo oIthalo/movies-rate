@@ -6,4 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Bogus" Version="35.6.1" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\backend\MoviesRate.Application\MoviesRate.Application.csproj" />
+    <ProjectReference Include="..\..\src\backend\MoviesRate.Domain\MoviesRate.Domain.csproj" />
+    <ProjectReference Include="..\..\src\backend\MoviesRate.Infrastructure\MoviesRate.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\shared\MoviesRate.Communication\MoviesRate.Communication.csproj" />
+  </ItemGroup>
+
 </Project>
