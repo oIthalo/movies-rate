@@ -38,7 +38,7 @@ public class LoginUserUseCase : ILoginUserUseCase
         return new ShortUserResponse()
         {
             Name = user.Name,
-            Tokens =
+            Tokens = new TokensResponse()
             {
                 AccessToken = token,
             }

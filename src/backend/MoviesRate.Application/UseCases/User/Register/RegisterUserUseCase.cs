@@ -51,9 +51,9 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         return new ShortUserResponse()
         {
             Name = user.Name,
-            Tokens =
+            Tokens = new TokensResponse()
             {
-                AccessToken = token,
+                AccessToken = token
             }
         };
     }

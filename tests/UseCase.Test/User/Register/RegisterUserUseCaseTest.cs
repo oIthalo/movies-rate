@@ -3,6 +3,7 @@ using CommonTestUtilities.Entities;
 using CommonTestUtilities.Mapper;
 using CommonTestUtilities.Repositories;
 using CommonTestUtilities.Requests;
+using CommonTestUtilities.Tokens;
 using FluentAssertions;
 using MoviesRate.Application.UseCases.User.Register;
 using MoviesRate.Communication.Response;
@@ -47,10 +48,11 @@ public class RegisterUserUseCaseTest
         var autoMapper = AutoMapperBuilder.Build();
         var unitOfWork = UnitOfWorkBuilder.Build();
         var passwordEncripter = PasswordEncripterBuilder.Build();
+        var accessTokenGenerator = AccessTokenGeneratorBuilder.Build();
 
         if (user is not null)
             readUserRepository.ExistActiveUserWithEmail(user);
 
-        return new RegisterUserUseCase(readUserRepository.Build(), writeUserRepository, autoMapper, unitOfWork, passwordEncripter);
+        return new RegisterUserUseCase(readUserRepository.Build(), writeUserRepository, autoMapper, unitOfWork, passwordEncripter, accessTokenGenerator);
     }
 }
