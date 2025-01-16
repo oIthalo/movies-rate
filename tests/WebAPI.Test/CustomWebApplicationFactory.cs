@@ -1,16 +1,16 @@
-﻿using CommonTestUtilities.Entities;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MoviesRate.Infrastructure.DataAccess.DataContexts;
+using System.Data;
 
 namespace WebAPI.Test;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
-    private MoviesRate.Domain.Entities.User _user = default!;
-    private string _password = null!;
+    private SqliteConnection _connection = default!;
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -21,34 +21,25 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 if (descriptor is not null)
                     services.Remove(descriptor);
 
-                var provider = services.AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();
+                _connection = new SqliteConnection("DataSource=:memory:");
+                _connection.Open();
 
+                // Adicionar o contexto de banco de dados usando a mesma conexão SQLite
                 services.AddDbContext<MoviesRateDbContextEF>(opts =>
                 {
-                    opts.UseInMemoryDatabase("InMemoryDbForTesting");
-                    opts.UseInternalServiceProvider(provider);
+                    opts.UseSqlite(_connection);
                 });
 
                 using var scope = services.BuildServiceProvider().CreateScope();
                 var dbContext = scope.ServiceProvider.GetRequiredService<MoviesRateDbContextEF>();
 
-                dbContext.Database.EnsureDeleted();
-
-                StartDataBase(dbContext);
+                dbContext.Database.EnsureCreated();
             });
     }
 
-    public MoviesRate.Domain.Entities.User GetUser() => _user;
-    public string GetPassword() => _password;
-    public string GetEmail() => _user.Email;
-    public Guid GetUserIdentifier() => _user.Identifier;
-
-    private void StartDataBase(MoviesRateDbContextEF dbContext)
+    protected override void Dispose(bool disposing)
     {
-        (_user, _password) = UserBuilder.Build();
-
-        dbContext.Users.Add(_user);
-
-        dbContext.SaveChanges();
+        if (_connection.State is not ConnectionState.Closed)
+            _connection.Close();
     }
 }

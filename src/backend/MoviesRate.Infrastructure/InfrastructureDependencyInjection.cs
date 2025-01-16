@@ -21,10 +21,6 @@ public static class InfrastructureDependencyInjection
         AddFluentMigrator(services, configuration);
         AddRepositories(services);
         AddPasswordEncripter(services);
-
-        if (configuration.IsUnitTestEnviroment())
-            return;
-
         AddDbContexts(services, configuration);
     }
 
@@ -33,7 +29,6 @@ public static class InfrastructureDependencyInjection
         var connectionString = configuration.ConnectionString();
 
         services.AddDbContext<MoviesRateDbContextEF>(opts => opts.UseSqlServer(connectionString));
-
         services.AddScoped(opts => new MoviesRateDbContextDapper(connectionString));
     }
 
