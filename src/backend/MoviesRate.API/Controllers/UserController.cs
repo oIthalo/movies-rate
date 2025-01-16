@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MoviesRate.Application.UseCases.User.Login;
 using MoviesRate.Application.UseCases.User.Register;
 using MoviesRate.Communication.Requests;
 using MoviesRate.Communication.Response;
@@ -17,5 +18,18 @@ public class UserController : MoviesRateControllerBase
     {
         var result = await useCase.Execute(request);
         return Created(string.Empty, result);
+    }
+
+    [HttpPost]
+    [Route("login")]
+    [ProducesResponseType(typeof(ShortUserResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Login(
+        [FromServices] ILoginUserUseCase useCase,
+        [FromBody] LoginUserRequest request)
+    {
+        var result = await useCase.Execute(request);
+        return Ok(result);
     }
 }

@@ -12,8 +12,7 @@ public class ReadUserRepositoryBuilder
 
     public IReadUserRepository Build() => _repository.Object;
 
-    public void ExistActiveUserWithEmail(User user)
-    {
-        _repository.Setup(repos => repos.ExistActiveUserWithEmail(user.Email)).ReturnsAsync(true);
-    }
+    public void ExistActiveUserWithEmail(User user) => _repository.Setup(repos => repos.ExistActiveUserWithEmail(user.Email)).ReturnsAsync(true);
+
+    public void GetUserByEmail(User user) => _repository.Setup(repos => repos.GetUserByEmail(user.Email)).ReturnsAsync(user);
 }

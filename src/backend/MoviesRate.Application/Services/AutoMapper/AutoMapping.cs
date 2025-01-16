@@ -9,10 +9,16 @@ public class AutoMapping : Profile
     public AutoMapping()
     {
         RequestToDomain();
+        DomainToResponse();
     }
 
     public void RequestToDomain()
     {
         CreateMap<RegisterUserRequest, User>();
+    }
+
+    public void DomainToResponse()
+    {
+        
     }
 }

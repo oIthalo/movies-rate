@@ -10,6 +10,7 @@ using MoviesRate.Infrastructure.DataAccess.DataContexts;
 using MoviesRate.Infrastructure.DataAccess.Repositories.User;
 using MoviesRate.Infrastructure.Extensions;
 using MoviesRate.Infrastructure.Security.BCryptNet;
+using MoviesRate.Infrastructure.Security.Tokens.Access.Generator;
 using System.Reflection;
 
 namespace MoviesRate.Infrastructure;
@@ -30,6 +31,14 @@ public static class InfrastructureDependencyInjection
 
         services.AddDbContext<MoviesRateDbContextEF>(opts => opts.UseSqlServer(connectionString));
         services.AddScoped(opts => new MoviesRateDbContextDapper(connectionString));
+    }
+
+    public static void AddTokens(IServiceCollection services, IConfiguration configuration)
+    {
+        var expirationInMinutes = configuration.GetValue<uint>("Settings:JWT:ExpirationInMinutes");
+        var signingKey = configuration.GetValue<string>("Settings:JWT:SigningKey");
+
+        services.AddScoped(opts => new JwtTokenGenerator(expirationInMinutes, signingKey!));
     }
 
     private static void AddFluentMigrator(IServiceCollection services, IConfiguration configuration)

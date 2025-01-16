@@ -126,6 +126,9 @@
   <data name="EMAIL_INVALID" xml:space="preserve">
     <value>Email inválido.</value>
   </data>
+  <data name="INVALID_LOGIN" xml:space="preserve">
+    <value>O email ou senha não coincidem.</value>
+  </data>
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>O nome de usuário não pode estar vazio.</value>
   </data>
@@ -137,5 +140,8 @@
   </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Erro desconhecido.</value>
+  </data>
+  <data name="USER_NOT_FOUND" xml:space="preserve">
+    <value>Usuário não encontrado.</value>
   </data>
 </root>

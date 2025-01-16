@@ -88,6 +88,15 @@ namespace MoviesRate.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O email ou senha não coincidem..
+        /// </summary>
+        public static string INVALID_LOGIN {
+            get {
+                return ResourceManager.GetString("INVALID_LOGIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O nome de usuário não pode estar vazio..
         /// </summary>
         public static string NAME_EMPTY {
@@ -120,6 +129,15 @@ namespace MoviesRate.Exception {
         public static string UNKNOWN_ERROR {
             get {
                 return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuário não encontrado..
+        /// </summary>
+        public static string USER_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("USER_NOT_FOUND", resourceCulture);
             }
         }
     }
