@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using MoviesRate.Application.Services.AutoMapper;
+using MoviesRate.Application.UseCases.User.Login;
 using MoviesRate.Application.UseCases.User.Register;
 
 namespace MoviesRate.Application;
@@ -16,6 +17,7 @@ public static class ApplicationDependencyInjection
     public static void AddUseCases(IServiceCollection services)
     {
         services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+        services.AddScoped<ILoginUserUseCase, LoginUserUseCase>();
     }
 
     public static void AddAutoMapper(IServiceCollection services)
