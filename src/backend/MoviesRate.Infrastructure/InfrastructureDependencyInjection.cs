@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MoviesRate.Domain.Repositories;
 using MoviesRate.Domain.Repositories.User;
 using MoviesRate.Domain.Security.Criptography;
+using MoviesRate.Domain.Security.Tokens.Access;
 using MoviesRate.Infrastructure.DataAccess;
 using MoviesRate.Infrastructure.DataAccess.DataContexts;
 using MoviesRate.Infrastructure.DataAccess.Repositories.User;
@@ -23,6 +24,7 @@ public static class InfrastructureDependencyInjection
         AddRepositories(services);
         AddPasswordEncripter(services);
         AddDbContexts(services, configuration);
+        AddTokens(services, configuration);
     }
 
     public static void AddDbContexts(IServiceCollection services, IConfiguration configuration)
@@ -38,7 +40,7 @@ public static class InfrastructureDependencyInjection
         var expirationInMinutes = configuration.GetValue<uint>("Settings:JWT:ExpirationInMinutes");
         var signingKey = configuration.GetValue<string>("Settings:JWT:SigningKey");
 
-        services.AddScoped(opts => new JwtTokenGenerator(expirationInMinutes, signingKey!));
+        services.AddScoped<IAccessTokenGenerator>(opts => new JwtTokenGenerator(expirationInMinutes, signingKey!));
     }
 
     private static void AddFluentMigrator(IServiceCollection services, IConfiguration configuration)
