@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MoviesRate.Domain.Interfaces;
 using MoviesRate.Domain.Repositories;
 using MoviesRate.Domain.Repositories.User;
 using MoviesRate.Domain.Security.Criptography;
@@ -12,6 +13,7 @@ using MoviesRate.Infrastructure.DataAccess.Repositories.User;
 using MoviesRate.Infrastructure.Extensions;
 using MoviesRate.Infrastructure.Security.BCryptNet;
 using MoviesRate.Infrastructure.Security.Tokens.Access.Generator;
+using MoviesRate.Infrastructure.Services.TMDbAPI;
 using System.Reflection;
 
 namespace MoviesRate.Infrastructure;
@@ -25,6 +27,8 @@ public static class InfrastructureDependencyInjection
         AddPasswordEncripter(services);
         AddDbContexts(services, configuration);
         AddTokens(services, configuration);
+        AddTMDbApi(services, configuration);
+        AddTMDbServices(services);
     }
 
     public static void AddDbContexts(IServiceCollection services, IConfiguration configuration)
@@ -63,4 +67,21 @@ public static class InfrastructureDependencyInjection
     }
 
     private static void AddPasswordEncripter(IServiceCollection services) => services.AddScoped<IPasswordEncripter, BCryptNet>();
+
+    private static void AddTMDbApi(IServiceCollection services, IConfiguration configuration)
+    {
+        var apiKey = configuration.GetValue<string>("Settings:TMDbAPI:ApiKey");
+
+        services.AddHttpClient<ITMDbApi, TMDbApi>(client =>
+        {
+            client.BaseAddress = new Uri("https://api.themoviedb.org/3/");
+        });
+
+        services.AddSingleton(new TMDbConfigs() { ApiKey = apiKey! });
+    }
+
+    private static void AddTMDbServices(IServiceCollection services)
+    {
+        services.AddScoped<ITMDbService, TMDbService>();
+    }
 }

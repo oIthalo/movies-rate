@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MoviesRate.Communication.Requests;
+using MoviesRate.Domain.Dtos;
 using MoviesRate.Domain.Entities;
 
 namespace MoviesRate.Application.Services.AutoMapper;
@@ -9,7 +10,7 @@ public class AutoMapping : Profile
     public AutoMapping()
     {
         RequestToDomain();
-        DomainToResponse();
+        DtosMappings();
     }
 
     public void RequestToDomain()
@@ -17,8 +18,11 @@ public class AutoMapping : Profile
         CreateMap<RegisterUserRequest, User>();
     }
 
-    public void DomainToResponse()
+    public void DtosMappings()
     {
-        
+        CreateMap<Movie, MovieResponseDto>();
+
+        CreateMap<MoviesList, MoviesListResponseDto>()
+            .ForMember(dest => dest.Movies, opt => opt.MapFrom(src => src.Movies));
     }
 }

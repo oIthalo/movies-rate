@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using MoviesRate.Application.Services.AutoMapper;
+using MoviesRate.Application.UseCases.Dashboard.GetTopRated;
 using MoviesRate.Application.UseCases.User.Login;
 using MoviesRate.Application.UseCases.User.Register;
 
@@ -18,6 +19,7 @@ public static class ApplicationDependencyInjection
     {
         services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
         services.AddScoped<ILoginUserUseCase, LoginUserUseCase>();
+        services.AddScoped<IGetMoviesTopRatedUseCase, GetMoviesTopRatedUseCase>();
     }
 
     public static void AddAutoMapper(IServiceCollection services)
