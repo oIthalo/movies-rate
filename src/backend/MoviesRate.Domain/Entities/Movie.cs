@@ -10,6 +10,9 @@ public class Movie
     [JsonPropertyName("backdrop_path")]
     public string? BackdropPath { get; set; }
 
+    [JsonPropertyName("genres")]
+    public List<Genre> Genres { get; set; } = [];
+
     [JsonPropertyName("genre_ids")]
     public List<int> GenreIds { get; set; } = [];
 

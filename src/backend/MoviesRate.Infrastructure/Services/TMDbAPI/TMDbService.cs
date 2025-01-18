@@ -12,12 +12,26 @@ public class TMDbService : ITMDbService
     public async Task<MoviesList> GetAllMoviesToDashboard(int page)
     {
         var response = await _api.GetAllMoviesToDashboard(page);
-        var randoms = response.Movies.OrderBy(x => Guid.NewGuid()).Take(10).ToList();
+        var randomMovies = response.Movies
+            .OrderBy(x => Guid.NewGuid())
+            .Take(10)
+            .ToList();
+
+        var genres = await _api.GetGenres();
+
+        foreach (var movie in randomMovies)
+        {
+            var movieGenres = genres.Genres
+                .Where(x => movie!.GenreIds.Contains(x.Id))
+                .ToList();
+
+            movie!.Genres = movieGenres;
+        }
 
         return new MoviesList()
         {
             Page = response.Page,
-            Movies = randoms ?? [],
+            Movies = randomMovies ?? [],
             TotalPages = response.TotalPages,
             TotalResults = response.TotalResults,
         };
@@ -26,7 +40,18 @@ public class TMDbService : ITMDbService
     public async Task<Movie> GetRandomRecommendedMovieToDashboard()
     {
         var response = await _api.GetRandomRecommendedMovieToDashboard();
-        var movie = response.Movies.OrderBy(x => Guid.NewGuid()).Take(1).FirstOrDefault();
+        var movie = response.Movies
+            .OrderBy(x => Guid.NewGuid())
+            .Take(1)
+            .FirstOrDefault();
+
+        var genres = await _api.GetGenres();
+
+        var movieGenres = genres.Genres
+            .Where(x => movie!.GenreIds.Contains(x.Id))
+            .ToList();
+
+        movie!.Genres = movieGenres;
 
         return movie!;
     }
@@ -34,12 +59,26 @@ public class TMDbService : ITMDbService
     public async Task<MoviesList> Get10RandomTopRatedMovies()
     {
         var response = await _api.GetTopRated();
-        var randoms = response.Movies.OrderBy(x => Guid.NewGuid()).Take(10).ToList();
+        var randomMovies = response.Movies
+            .OrderBy(x => Guid.NewGuid())
+            .Take(10)
+            .ToList();
+
+        var genres = await _api.GetGenres();
+
+        foreach (var movie in randomMovies)
+        {
+            var movieGenres = genres.Genres
+                .Where(x => movie!.GenreIds.Contains(x.Id))
+                .ToList();
+
+            movie!.Genres = movieGenres;
+        }
 
         return new MoviesList()
         {
             Page = response.Page,
-            Movies = randoms ?? [],
+            Movies = randomMovies ?? [],
             TotalPages = response.TotalPages,
             TotalResults = response.TotalResults,
         };
@@ -48,14 +87,34 @@ public class TMDbService : ITMDbService
     public async Task<MoviesList> Get10RandomPopularMovies()
     {
         var response = await _api.GetPopular();
-        var randoms = response.Movies.OrderBy(x => Guid.NewGuid()).Take(10).ToList();
+        var randomMovies = response.Movies
+            .OrderBy(x => Guid.NewGuid())
+            .Take(10)
+            .ToList();
+
+        var genres = await _api.GetGenres();
+
+        foreach (var movie in randomMovies)
+        {
+            var movieGenres = genres.Genres
+                .Where(x => movie!.GenreIds.Contains(x.Id))
+                .ToList();
+
+            movie!.Genres = movieGenres;
+        }
 
         return new MoviesList()
         {
             Page = response.Page,
-            Movies = randoms ?? [],
+            Movies = randomMovies ?? [],
             TotalPages = response.TotalPages,
             TotalResults = response.TotalResults,
         };
+    }
+
+    public async Task<Movie> GetMovieById(int id)
+    {
+        var response = await _api.GetMovieById(id);
+        return response;
     }
 }
