@@ -1,6 +1,6 @@
 ﻿namespace MoviesRate.Domain.Entities;
 
-public class Reviews : EntityBase
+public class Review : EntityBase
 {
     public Guid UserIdentifier { get; set; }
     public long MovieId { get; set; }
