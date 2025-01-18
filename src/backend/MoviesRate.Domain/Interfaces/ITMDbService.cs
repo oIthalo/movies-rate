@@ -4,5 +4,8 @@ namespace MoviesRate.Domain.Interfaces;
 
 public interface ITMDbService
 {
+    Task<MoviesList> GetAllMoviesToDashboard(int page);
+    Task<Movie> GetRandomRecommendedMovieToDashboard();
     Task<MoviesList> Get10RandomTopRatedMovies();
+    Task<MoviesList> Get10RandomPopularMovies();
 }
