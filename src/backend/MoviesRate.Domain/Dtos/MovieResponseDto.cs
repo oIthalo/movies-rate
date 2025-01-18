@@ -1,4 +1,6 @@
-﻿namespace MoviesRate.Domain.Dtos;
+﻿using MoviesRate.Domain.Entities;
+
+namespace MoviesRate.Domain.Dtos;
 
 public class MovieResponseDto
 {
@@ -7,4 +9,5 @@ public class MovieResponseDto
     public string? PosterPath { get; set; }
     public string? ReleaseDate { get; set; }
     public string? Title { get; set; }
+    public List<Genre> Genres { get; set; } = [];
 }

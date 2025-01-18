@@ -8,4 +8,5 @@ public interface ITMDbService
     Task<Movie> GetRandomRecommendedMovieToDashboard();
     Task<MoviesList> Get10RandomTopRatedMovies();
     Task<MoviesList> Get10RandomPopularMovies();
+    Task<Movie> GetMovieById(int id);
 }

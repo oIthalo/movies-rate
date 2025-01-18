@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\shared\MoviesRate.Exception\MoviesRate.Exception.csproj" />
     <ProjectReference Include="..\MoviesRate.Domain\MoviesRate.Domain.csproj" />
   </ItemGroup>
 
