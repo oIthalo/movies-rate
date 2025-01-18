@@ -19,9 +19,47 @@ public class TMDbApi : ITMDbApi
         _apiKey = config.ApiKey;
     }
 
+    public async Task<MoviesList> GetAllMoviesToDashboard(int page) // to dashboard
+    {
+        var endpoint = $"{BASE_URL}movie/popular?api_key={_apiKey}&language=pt-BR&page={page}";
+        var response = await _httpClient.GetAsync(endpoint);
+        response.EnsureSuccessStatusCode();
+
+        var json = await response.Content.ReadAsStreamAsync();
+        var result = await JsonSerializer.DeserializeAsync<MoviesList>(json);
+
+        return result!;
+    }
+
+    public async Task<MoviesList> GetRandomRecommendedMovieToDashboard() // to dashboard
+    {
+        var page = new Random().Next(0, 497);
+            
+        var endpoint = $"{BASE_URL}movie/popular?api_key={_apiKey}&language=pt-BR&page={page}";
+        var response = await _httpClient.GetAsync(endpoint);
+        response.EnsureSuccessStatusCode();
+
+        var json = await response.Content.ReadAsStreamAsync();
+        var result = await JsonSerializer.DeserializeAsync<MoviesList>(json);
+
+        return result!;
+    }
+
     public async Task<MoviesList> GetTopRated()
     {
-        var endpoint = $"{BASE_URL}movie/top_rated?api_key={_apiKey}";
+        var endpoint = $"{BASE_URL}movie/top_rated?api_key={_apiKey}&language=pt-BR";
+        var response = await _httpClient.GetAsync(endpoint);
+        response.EnsureSuccessStatusCode();
+
+        var json = await response.Content.ReadAsStreamAsync();
+        var result = await JsonSerializer.DeserializeAsync<MoviesList>(json);
+
+        return result!;
+    }
+
+    public async Task<MoviesList> GetPopular()
+    {
+        var endpoint = $"{BASE_URL}movie/popular?api_key={_apiKey}&language=pt-BR";
         var response = await _httpClient.GetAsync(endpoint);
         response.EnsureSuccessStatusCode();
 
