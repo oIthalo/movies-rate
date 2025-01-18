@@ -132,6 +132,9 @@
   <data name="INVALID_PAGE" xml:space="preserve">
     <value>Página não encontrada. Você deve procurar entre 0 e 496 páginas.</value>
   </data>
+  <data name="MOVIE_NOT_FOUND" xml:space="preserve">
+    <value>Filme não encontrado.</value>
+  </data>
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>O nome de usuário não pode estar vazio.</value>
   </data>

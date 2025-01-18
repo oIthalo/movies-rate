@@ -106,6 +106,15 @@ namespace MoviesRate.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filme não encontrado..
+        /// </summary>
+        public static string MOVIE_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("MOVIE_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O nome de usuário não pode estar vazio..
         /// </summary>
         public static string NAME_EMPTY {
