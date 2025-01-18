@@ -97,6 +97,15 @@ namespace MoviesRate.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Página não encontrada. Você deve procurar entre 0 e 496 páginas..
+        /// </summary>
+        public static string INVALID_PAGE {
+            get {
+                return ResourceManager.GetString("INVALID_PAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O nome de usuário não pode estar vazio..
         /// </summary>
         public static string NAME_EMPTY {
