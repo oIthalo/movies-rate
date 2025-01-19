@@ -10,4 +10,5 @@ public class MovieResponseDto
     public string? ReleaseDate { get; set; }
     public string? Title { get; set; }
     public List<Genre> Genres { get; set; } = [];
+    public decimal NoteAverage { get; set; }
 }

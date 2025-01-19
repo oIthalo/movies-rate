@@ -4,15 +4,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MoviesRate.Domain.Interfaces;
 using MoviesRate.Domain.Repositories;
+using MoviesRate.Domain.Repositories.Reviews;
 using MoviesRate.Domain.Repositories.User;
 using MoviesRate.Domain.Security.Criptography;
 using MoviesRate.Domain.Security.Tokens.Access;
+using MoviesRate.Domain.Services.LoggedUser;
 using MoviesRate.Infrastructure.DataAccess;
 using MoviesRate.Infrastructure.DataAccess.DataContexts;
+using MoviesRate.Infrastructure.DataAccess.Repositories.Review;
 using MoviesRate.Infrastructure.DataAccess.Repositories.User;
 using MoviesRate.Infrastructure.Extensions;
 using MoviesRate.Infrastructure.Security.BCryptNet;
 using MoviesRate.Infrastructure.Security.Tokens.Access.Generator;
+using MoviesRate.Infrastructure.Services.LoggedUser;
 using MoviesRate.Infrastructure.Services.TMDbAPI;
 using System.Reflection;
 
@@ -29,6 +33,7 @@ public static class InfrastructureDependencyInjection
         AddTokens(services, configuration);
         AddTMDbApi(services, configuration);
         AddTMDbServices(services);
+        AddLoggedUser(services);
     }
 
     public static void AddDbContexts(IServiceCollection services, IConfiguration configuration)
@@ -64,6 +69,8 @@ public static class InfrastructureDependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IReadUserRepository, ReadUserRepository>();
         services.AddScoped<IWriteUserRepository, WriteUserRepository>();
+
+        services.AddScoped<IReadReviewRepository, ReadReviewRepository>();
     }
 
     private static void AddPasswordEncripter(IServiceCollection services) => services.AddScoped<IPasswordEncripter, BCryptNet>();
@@ -84,4 +91,6 @@ public static class InfrastructureDependencyInjection
     {
         services.AddScoped<ITMDbService, TMDbService>();
     }
+
+    private static void AddLoggedUser(IServiceCollection services) => services.AddScoped<ILoggedUser, LoggedUser>();
 }

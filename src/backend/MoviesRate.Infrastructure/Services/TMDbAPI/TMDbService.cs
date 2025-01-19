@@ -1,31 +1,37 @@
 ﻿using MoviesRate.Domain.Entities;
 using MoviesRate.Domain.Interfaces;
+using MoviesRate.Domain.Repositories.Reviews;
 
 namespace MoviesRate.Infrastructure.Services.TMDbAPI;
 
 public class TMDbService : ITMDbService
 {
     private readonly ITMDbApi _api;
+    private readonly IReadReviewRepository _readReviewsRepository;
 
-    public TMDbService(ITMDbApi api) =>  _api = api;
+    public TMDbService(
+        ITMDbApi api, 
+        IReadReviewRepository readReviewsRepository)
+    {
+        _api = api;
+        _readReviewsRepository = readReviewsRepository;
+    }
 
     public async Task<MoviesList> GetAllMoviesToDashboard(int page)
     {
         var response = await _api.GetAllMoviesToDashboard(page);
-        var randomMovies = response.Movies
-            .OrderBy(x => Guid.NewGuid())
-            .Take(10)
-            .ToList();
+        var randomMovies = response.Movies.OrderBy(x => Guid.NewGuid()).Take(10).ToList();
 
         var genres = await _api.GetGenres();
 
         foreach (var movie in randomMovies)
         {
-            var movieGenres = genres.Genres
-                .Where(x => movie!.GenreIds.Contains(x.Id))
-                .ToList();
-
+            var movieGenres = genres.Genres.Where(x => movie!.GenreIds.Contains(x.Id)).ToList();
             movie!.Genres = movieGenres;
+
+            var movieReview = await _readReviewsRepository.GetReviewByMovieId(movie.Id);
+            var ratings = movieReview!.Reviews.Select(x => x.Ratings).ToList();
+            movie.NoteAverage = ratings.Count != 0 ? ratings.Average() : 0;
         }
 
         return new MoviesList()
