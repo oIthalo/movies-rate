@@ -8,6 +8,7 @@ using MoviesRate.Domain.Repositories.Reviews;
 using MoviesRate.Domain.Repositories.User;
 using MoviesRate.Domain.Security.Criptography;
 using MoviesRate.Domain.Security.Tokens.Access;
+using MoviesRate.Domain.Services.LoggedUser;
 using MoviesRate.Infrastructure.DataAccess;
 using MoviesRate.Infrastructure.DataAccess.DataContexts;
 using MoviesRate.Infrastructure.DataAccess.Repositories.Review;
@@ -15,6 +16,7 @@ using MoviesRate.Infrastructure.DataAccess.Repositories.User;
 using MoviesRate.Infrastructure.Extensions;
 using MoviesRate.Infrastructure.Security.BCryptNet;
 using MoviesRate.Infrastructure.Security.Tokens.Access.Generator;
+using MoviesRate.Infrastructure.Services.LoggedUser;
 using MoviesRate.Infrastructure.Services.TMDbAPI;
 using System.Reflection;
 
@@ -31,6 +33,7 @@ public static class InfrastructureDependencyInjection
         AddTokens(services, configuration);
         AddTMDbApi(services, configuration);
         AddTMDbServices(services);
+        AddLoggedUser(services);
     }
 
     public static void AddDbContexts(IServiceCollection services, IConfiguration configuration)
@@ -88,4 +91,6 @@ public static class InfrastructureDependencyInjection
     {
         services.AddScoped<ITMDbService, TMDbService>();
     }
+
+    private static void AddLoggedUser(IServiceCollection services) => services.AddScoped<ILoggedUser, LoggedUser>();
 }
