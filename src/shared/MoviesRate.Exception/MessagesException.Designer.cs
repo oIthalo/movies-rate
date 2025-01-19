@@ -124,6 +124,15 @@ namespace MoviesRate.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O token não pode estar vazio..
+        /// </summary>
+        public static string NO_TOKEN {
+            get {
+                return ResourceManager.GetString("NO_TOKEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A senha não pode estar vazia..
         /// </summary>
         public static string PASSWORD_EMPTY {
@@ -156,6 +165,15 @@ namespace MoviesRate.Exception {
         public static string USER_NOT_FOUND {
             get {
                 return ResourceManager.GetString("USER_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O usuário não tem permissão para accessar esse recurso..
+        /// </summary>
+        public static string USER_WITHOUT_PERMISSION {
+            get {
+                return ResourceManager.GetString("USER_WITHOUT_PERMISSION", resourceCulture);
             }
         }
     }
