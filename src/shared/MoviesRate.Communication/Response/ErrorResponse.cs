@@ -7,4 +7,5 @@ public class ErrorResponse
     public ErrorResponse(string error) => Errors = [error];
 
     public IList<string> Errors { get; set; }
+    public bool TokenIsExpired { get; set; } = false;
 }

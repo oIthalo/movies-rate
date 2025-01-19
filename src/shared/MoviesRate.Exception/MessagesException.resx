@@ -138,6 +138,9 @@
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>O nome de usuário não pode estar vazio.</value>
   </data>
+  <data name="NO_TOKEN" xml:space="preserve">
+    <value>O token não pode estar vazio.</value>
+  </data>
   <data name="PASSWORD_EMPTY" xml:space="preserve">
     <value>A senha não pode estar vazia.</value>
   </data>
@@ -149,5 +152,8 @@
   </data>
   <data name="USER_NOT_FOUND" xml:space="preserve">
     <value>Usuário não encontrado.</value>
+  </data>
+  <data name="USER_WITHOUT_PERMISSION" xml:space="preserve">
+    <value>O usuário não tem permissão para accessar esse recurso.</value>
   </data>
 </root>
