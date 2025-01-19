@@ -21,7 +21,8 @@ public class AutoMapping : Profile
     public void DtosMappings()
     {
         CreateMap<Movie, MovieResponseDto>()
-            .ForMember(dest => dest.Genres, opt => opt.MapFrom(src => src.Genres));
+            .ForMember(dest => dest.Genres, opt => opt.MapFrom(src => src.Genres))
+            .ForMember(dest => dest.NoteAverage, opt => opt.MapFrom(src => src.NoteAverage));
 
         CreateMap<MoviesList, MoviesListResponseDto>()
             .ForMember(dest => dest.Movies, opt => opt.MapFrom(src => src.Movies));
