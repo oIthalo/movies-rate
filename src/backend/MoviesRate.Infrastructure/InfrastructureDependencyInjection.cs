@@ -4,11 +4,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MoviesRate.Domain.Interfaces;
 using MoviesRate.Domain.Repositories;
+using MoviesRate.Domain.Repositories.Reviews;
 using MoviesRate.Domain.Repositories.User;
 using MoviesRate.Domain.Security.Criptography;
 using MoviesRate.Domain.Security.Tokens.Access;
 using MoviesRate.Infrastructure.DataAccess;
 using MoviesRate.Infrastructure.DataAccess.DataContexts;
+using MoviesRate.Infrastructure.DataAccess.Repositories.Review;
 using MoviesRate.Infrastructure.DataAccess.Repositories.User;
 using MoviesRate.Infrastructure.Extensions;
 using MoviesRate.Infrastructure.Security.BCryptNet;
@@ -64,6 +66,8 @@ public static class InfrastructureDependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IReadUserRepository, ReadUserRepository>();
         services.AddScoped<IWriteUserRepository, WriteUserRepository>();
+
+        services.AddScoped<IReadReviewRepository, ReadReviewRepository>();
     }
 
     private static void AddPasswordEncripter(IServiceCollection services) => services.AddScoped<IPasswordEncripter, BCryptNet>();
