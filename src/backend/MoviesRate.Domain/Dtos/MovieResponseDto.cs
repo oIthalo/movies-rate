@@ -9,6 +9,7 @@ public class MovieResponseDto
     public string? PosterPath { get; set; }
     public string? ReleaseDate { get; set; }
     public string? Title { get; set; }
-    public List<Genre> Genres { get; set; } = [];
+    public IList<Genre> Genres { get; set; } = [];
     public decimal NoteAverage { get; set; }
+    public IList<Comment> Comments { get; set; } = default!;
 }
