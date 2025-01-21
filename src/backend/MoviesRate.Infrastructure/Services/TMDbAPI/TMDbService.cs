@@ -28,10 +28,6 @@ public class TMDbService : ITMDbService
         {
             var movieGenres = genres.Genres.Where(x => movie!.GenreIds.Contains(x.Id)).ToList();
             movie!.Genres = movieGenres;
-
-            var movieReview = await _readReviewsRepository.GetReviewByMovieId(movie.Id);
-            var ratings = movieReview!.Reviews.Select(x => x.Ratings).ToList();
-            movie.NoteAverage = ratings.Count != 0 ? ratings.Average() : 0;
         }
 
         return new MoviesList()
@@ -120,7 +116,13 @@ public class TMDbService : ITMDbService
 
     public async Task<Movie> GetMovieById(int id)
     {
-        var response = await _api.GetMovieById(id);
-        return response;
+        var movie = await _api.GetMovieById(id);
+        
+        var movieReviews = await _readReviewsRepository.GetReviewsByMovieId(movie.Id);
+
+        var ratings = movieReviews!.Select(x => x.Rating).ToList();
+        movie.NoteAverage = ratings.Count != 0 ? ratings.Average() : 0;
+
+        return movie;
     }
 }
