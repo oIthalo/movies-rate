@@ -61,6 +61,24 @@ namespace MoviesRate.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Os comentários não podem estar vazio..
+        /// </summary>
+        public static string COMMENTS_EMPTY {
+            get {
+                return ResourceManager.GetString("COMMENTS_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O máximo de caracteres que um comentário pode conter é 500..
+        /// </summary>
+        public static string COMMENTS_INVALID {
+            get {
+                return ResourceManager.GetString("COMMENTS_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Esse email já foi registrado por outro usuário..
         /// </summary>
         public static string EMAIL_ALREADY_REGISTERED {
@@ -147,6 +165,24 @@ namespace MoviesRate.Exception {
         public static string PASSWORD_SHORT {
             get {
                 return ResourceManager.GetString("PASSWORD_SHORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A sua nota não pode estar vazia..
+        /// </summary>
+        public static string RATING_EMPTY {
+            get {
+                return ResourceManager.GetString("RATING_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A sua nota deve ser entre 0 e 10..
+        /// </summary>
+        public static string RATINGS_INVALID {
+            get {
+                return ResourceManager.GetString("RATINGS_INVALID", resourceCulture);
             }
         }
         
