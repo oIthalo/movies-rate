@@ -27,11 +27,11 @@ public class ReadUserRepository : IReadUserRepository
                 commandType: CommandType.StoredProcedure))
             .FirstOrDefault();
 
-    public async Task<Domain.Entities.User?> GetUserByIdentifier(Guid identifier) =>
+    public async Task<Domain.Entities.User> GetUserByIdentifier(Guid identifier) =>
         (await _dbContext.Connection
             .QueryAsync<Domain.Entities.User>(
                 "spGetUserByIdentifier",
                 new { identifier },
                 commandType: CommandType.StoredProcedure))
-            .FirstOrDefault();
+            .First();
 }

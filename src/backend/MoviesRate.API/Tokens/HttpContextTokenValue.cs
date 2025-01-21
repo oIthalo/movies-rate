@@ -4,9 +4,9 @@ namespace MoviesRate.API.Tokens;
 
 public class HttpContextTokenValue : ITokenProvider
 {
-    private readonly HttpContextAccessor _contextAccessor;
+    private readonly IHttpContextAccessor _contextAccessor;
 
-    public HttpContextTokenValue(HttpContextAccessor httpContextAccessor) => _contextAccessor = httpContextAccessor;
+    public HttpContextTokenValue(IHttpContextAccessor httpContextAccessor) => _contextAccessor = httpContextAccessor;
 
     public string Value()
     {

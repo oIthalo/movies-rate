@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="COMMENTS_EMPTY" xml:space="preserve">
+    <value>Os comentários não podem estar vazio.</value>
+  </data>
+  <data name="COMMENTS_INVALID" xml:space="preserve">
+    <value>O máximo de caracteres que um comentário pode conter é 500.</value>
+  </data>
   <data name="EMAIL_ALREADY_REGISTERED" xml:space="preserve">
     <value>Esse email já foi registrado por outro usuário.</value>
   </data>
@@ -146,6 +152,12 @@
   </data>
   <data name="PASSWORD_SHORT" xml:space="preserve">
     <value>A senha deve conter 8 ou mais caracteres.</value>
+  </data>
+  <data name="RATINGS_INVALID" xml:space="preserve">
+    <value>A sua nota deve ser entre 0 e 10.</value>
+  </data>
+  <data name="RATING_EMPTY" xml:space="preserve">
+    <value>A sua nota não pode estar vazia.</value>
   </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Erro desconhecido.</value>

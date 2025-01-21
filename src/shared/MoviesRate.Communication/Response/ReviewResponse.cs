@@ -1,8 +1,7 @@
-﻿namespace MoviesRate.Domain.Entities;
+﻿namespace MoviesRate.Communication.Response;
 
-public class Review : EntityBase
+public class ReviewResponse
 {
-    public Guid UserIdentifier { get; set; }
     public int MovieId { get; set; }
     public string Comments { get; set; } = string.Empty;
     public decimal Rating { get; set; }
