@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using MoviesRate.Domain.Entities;
 using MoviesRate.Domain.Repositories.Reviews;
 using MoviesRate.Infrastructure.DataAccess.DataContexts;
 using System.Data;
@@ -12,11 +11,14 @@ public class ReadReviewRepository : IReadReviewRepository
 
     public ReadReviewRepository(MoviesRateDbContextDapper dbContext) => _dbContext = dbContext;
 
-    public async Task<ReviewsList?> GetReviewByMovieId(int movieId) =>
-        (await _dbContext.Connection
-            .QueryAsync<ReviewsList>(
-                "spGetReviewByMovieId",
-                new { movieId },
-                commandType: CommandType.StoredProcedure))
-            .FirstOrDefault();
+    public async Task<List<Domain.Entities.Review>?> GetReviewsByMovieId(int movieId)
+    {
+        var reviews = await _dbContext.Connection
+            .QueryAsync<Domain.Entities.Review>(
+                "spGetReviewsByMovieId",
+                new { MovieId = movieId },
+                commandType: CommandType.StoredProcedure);
+
+        return reviews.ToList();
+    }
 }
