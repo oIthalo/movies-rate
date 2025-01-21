@@ -46,8 +46,10 @@ public class Movie
     [JsonPropertyName("vote_average")]
     public double VoteAverage { get; set; }
 
-    public decimal NoteAverage { get; set; }
-
     [JsonPropertyName("vote_count")]
     public int VoteCount { get; set; }
+
+    public decimal NoteAverage { get; set; }
+
+    public IList<Comment> Comments { get; set; } = [];
 }
