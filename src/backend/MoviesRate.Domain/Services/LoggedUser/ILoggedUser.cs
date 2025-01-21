@@ -4,5 +4,5 @@ namespace MoviesRate.Domain.Services.LoggedUser;
 
 public interface ILoggedUser
 {
-    Task<User?> User();
+    Task<User> User();
 }
