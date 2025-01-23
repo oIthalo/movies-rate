@@ -1,5 +1,4 @@
-﻿using Azure;
-using MoviesRate.Domain.Entities;
+﻿using MoviesRate.Domain.Entities;
 using MoviesRate.Domain.Interfaces;
 using MoviesRate.Exception;
 using MoviesRate.Exception.Exceptions;
@@ -102,6 +101,18 @@ public class TMDbApi : ITMDbApi
 
         var json = await response.Content.ReadAsStreamAsync();
         var result = await JsonSerializer.DeserializeAsync<GenresList>(json);
+
+        return result!;
+    }
+
+    public async Task<MoviesList> GetMoviesBySearch(string query)
+    {
+        var endpoint = $"{BASE_URL}search/movie?api_key={_apiKey}&language=pt-BR&query={query}";
+        var response = await _httpClient.GetAsync(endpoint);
+        response.EnsureSuccessStatusCode();
+
+        var json = await response.Content.ReadAsStreamAsync();
+        var result = await JsonSerializer.DeserializeAsync<MoviesList>(json);
 
         return result!;
     }

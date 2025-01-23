@@ -9,4 +9,5 @@ public interface ITMDbService
     Task<MoviesList> Get10RandomTopRatedMovies();
     Task<MoviesList> Get10RandomPopularMovies();
     Task<Movie> GetMovieById(int id);
+    Task<MoviesList> GetMoviesBySearch(string query);
 }
