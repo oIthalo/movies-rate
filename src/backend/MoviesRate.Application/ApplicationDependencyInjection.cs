@@ -5,8 +5,9 @@ using MoviesRate.Application.UseCases.Dashboard.GetAll;
 using MoviesRate.Application.UseCases.Dashboard.GetPopular;
 using MoviesRate.Application.UseCases.Dashboard.GetRecommended;
 using MoviesRate.Application.UseCases.Dashboard.GetTopRated;
+using MoviesRate.Application.UseCases.Movies.GetMovieById;
+using MoviesRate.Application.UseCases.Movies.GetMoviesBySearch;
 using MoviesRate.Application.UseCases.Reviews.AddReview;
-using MoviesRate.Application.UseCases.Reviews.GetMovieById;
 using MoviesRate.Application.UseCases.User.Login;
 using MoviesRate.Application.UseCases.User.Register;
 
@@ -32,6 +33,8 @@ public static class ApplicationDependencyInjection
         services.AddScoped<IGetMovieByIdUseCase, GetMovieByIdUseCase>();
 
         services.AddScoped<IAddMovieReviewUseCase, AddMovieReviewUseCase>();
+
+        services.AddScoped<IGetMoviesBySearch, GetMoviesBySearch>();
     }
 
     public static void AddAutoMapper(IServiceCollection services)
