@@ -10,4 +10,5 @@ public interface ITMDbApi
     Task<MoviesList> GetPopular();
     Task<Movie> GetMovieById(int id);
     Task<GenresList> GetGenres();
+    Task<MoviesList> GetMoviesBySearch(string query);
 }

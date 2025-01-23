@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoviesRate.API.Attributes;
+using MoviesRate.Application.UseCases.Movies.GetMovieById;
+using MoviesRate.Application.UseCases.Movies.GetMoviesBySearch;
 using MoviesRate.Application.UseCases.Reviews.AddReview;
-using MoviesRate.Application.UseCases.Reviews.GetMovieById;
 using MoviesRate.Communication.Requests;
 using MoviesRate.Communication.Response;
 using MoviesRate.Domain.Dtos;
@@ -12,7 +13,7 @@ public class MoviesController : MoviesRateControllerBase
 {
     [HttpGet]
     [Route("get-movie-by/{id}")]
-    // [IsAuth]
+    [IsAuth]
     [ProducesResponseType(typeof(MovieResponseDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetMovieById(
         [FromServices] IGetMovieByIdUseCase useCase,
@@ -35,5 +36,17 @@ public class MoviesController : MoviesRateControllerBase
     {
         var result = await useCase.Execute(movieId, request);
         return Created(string.Empty, result);
+    }
+
+    [HttpPost]
+    [Route("search-movie/{query}")]
+    [ProducesResponseType(typeof(MoviesListResponseDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetMovieBySearch(
+        [FromServices] IGetMoviesBySearch useCase,
+        [FromRoute] string query)
+    {
+        var result = await useCase.Execute(query);
+        return Ok(result);
     }
 }

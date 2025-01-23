@@ -1,4 +1,5 @@
-﻿using MoviesRate.Domain.Entities;
+﻿using Azure;
+using MoviesRate.Domain.Entities;
 using MoviesRate.Domain.Interfaces;
 using MoviesRate.Domain.Repositories.Reviews;
 
@@ -169,5 +170,41 @@ public class TMDbService : ITMDbService
         movie.Comments = comments.Select(commentText => new Comment { Text = commentText }).ToList();
 
         return movie;
+    }
+
+    public async Task<MoviesList> GetMoviesBySearch(string query)
+    {
+        // getting movies
+        var response = await _api.GetMoviesBySearch(query);
+        var movies = response.Movies.ToList();
+
+        // getting genres
+        var genres = await _api.GetGenres();
+
+        foreach (var movie in movies)
+        {
+            // adding genres
+            var movieGenres = genres.Genres.Where(x => movie!.GenreIds.Contains(x.Id)).ToList();
+            movie!.Genres = movieGenres;
+
+            // getting movie reviews
+            var movieReviews = await _readReviewsRepository.GetReviewsByMovieId(movie.Id);
+
+            // adding note average
+            var ratings = movieReviews!.Select(x => x.Rating).ToList();
+            movie.NoteAverage = ratings.Count != 0 ? ratings.Average() : 0;
+
+            // adding comments
+            var comments = movieReviews!.Select(x => x.Comments).ToList();
+            movie.Comments = comments.Select(commentText => new Comment { Text = commentText }).ToList();
+        }
+
+        return new MoviesList()
+        {
+            Page = response.Page,
+            Movies = movies ?? [],
+            TotalPages = response.TotalPages,
+            TotalResults = response.TotalResults,
+        };
     }
 }

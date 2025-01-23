@@ -2,7 +2,7 @@
 using MoviesRate.Domain.Dtos;
 using MoviesRate.Domain.Interfaces;
 
-namespace MoviesRate.Application.UseCases.Reviews.GetMovieById;
+namespace MoviesRate.Application.UseCases.Movies.GetMovieById;
 
 public class GetMovieByIdUseCase : IGetMovieByIdUseCase
 {
@@ -10,7 +10,7 @@ public class GetMovieByIdUseCase : IGetMovieByIdUseCase
     private readonly IMapper _mapper;
 
     public GetMovieByIdUseCase(
-        ITMDbService service, 
+        ITMDbService service,
         IMapper mapper)
     {
         _service = service;

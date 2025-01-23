@@ -1,6 +1,6 @@
 ﻿using MoviesRate.Domain.Dtos;
 
-namespace MoviesRate.Application.UseCases.Reviews.GetMovieById;
+namespace MoviesRate.Application.UseCases.Movies.GetMovieById;
 
 public interface IGetMovieByIdUseCase
 {
