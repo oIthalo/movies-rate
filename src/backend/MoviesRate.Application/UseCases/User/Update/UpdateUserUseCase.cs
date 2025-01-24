@@ -28,7 +28,7 @@ public class UpdateUserUseCase : IUpdateUserUseCase
         _loggedUser = loggedUser;
     }
 
-    public async Task<UpdateUserResponse> Execute(UpdateUserRequest request)
+    public async Task Execute(UpdateUserRequest request)
     {
         await Validate(request);
 
