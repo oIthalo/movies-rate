@@ -97,6 +97,15 @@ namespace MoviesRate.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O email não pode ser igual ao email atual..
+        /// </summary>
+        public static string EMAIL_EQUALS_CURRENT {
+            get {
+                return ResourceManager.GetString("EMAIL_EQUALS_CURRENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email inválido..
         /// </summary>
         public static string EMAIL_INVALID {
