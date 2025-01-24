@@ -30,9 +30,9 @@ public class UpdateUserUseCase : IUpdateUserUseCase
 
     public async Task<UpdateUserResponse> Execute(UpdateUserRequest request)
     {
-        var loggedUser = await _loggedUser.User();
+        await Validate(request);
 
-        await Validate(request, loggedUser);
+        var loggedUser = await _loggedUser.User();
 
         var user = await _readUserRepository.GetUserByIdentifier(loggedUser.Identifier);
         user.Name = request.Name;
@@ -48,14 +48,12 @@ public class UpdateUserUseCase : IUpdateUserUseCase
         };
     }
 
-    private async Task Validate(UpdateUserRequest request, Domain.Entities.User user)
+    private async Task Validate(UpdateUserRequest request)
     {
         var result = new UpdateUserValidator().Validate(request);
 
         var alreadyExist = await _readUserRepository.ExistActiveUserWithEmail(request.Email);
         if (alreadyExist) result.Errors.Add(new ValidationFailure(string.Empty, MessagesException.EMAIL_ALREADY_REGISTERED));
-
-        if (request.Email == user.Email) result.Errors.Add(new ValidationFailure(string.Empty, MessagesException.EMAIL_EQUALS_CURRENT));
 
         if (!result.IsValid) throw new ErrorOnValidationException(result.Errors.Select(x => x.ErrorMessage).ToList());
     }
