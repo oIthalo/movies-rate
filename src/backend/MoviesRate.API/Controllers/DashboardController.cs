@@ -3,6 +3,8 @@ using MoviesRate.Application.UseCases.Dashboard.GetAll;
 using MoviesRate.Application.UseCases.Dashboard.GetPopular;
 using MoviesRate.Application.UseCases.Dashboard.GetRecommended;
 using MoviesRate.Application.UseCases.Dashboard.GetTopRated;
+using MoviesRate.Application.UseCases.Movies.GetMoviesBySearch;
+using MoviesRate.Communication.Response;
 using MoviesRate.Domain.Dtos;
 
 namespace MoviesRate.API.Controllers;
@@ -47,6 +49,19 @@ public class DashboardController : MoviesRateControllerBase
         [FromServices] IGetRandomRecommendedMovieUseCase useCase)
     {
         var result = await useCase.Execute();
+        return Ok(result);
+    }
+
+
+    [HttpPost]
+    [Route("search-movie/{query}")]
+    [ProducesResponseType(typeof(MoviesListResponseDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetMovieBySearch(
+        [FromServices] IGetMoviesBySearch useCase,
+        [FromRoute] string query)
+    {
+        var result = await useCase.Execute(query);
         return Ok(result);
     }
 }
