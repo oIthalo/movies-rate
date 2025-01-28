@@ -1,6 +1,5 @@
 ﻿using FluentValidation.Results;
 using MoviesRate.Communication.Requests;
-using MoviesRate.Communication.Response;
 using MoviesRate.Domain.Repositories;
 using MoviesRate.Domain.Repositories.User;
 using MoviesRate.Domain.Services.LoggedUser;
@@ -40,12 +39,6 @@ public class UpdateUserUseCase : IUpdateUserUseCase
 
         _writeUserRepository.Update(user);
         await _unitOfWork.Commit();
-
-        return new UpdateUserResponse()
-        {
-            Name = user.Name,
-            Email = user.Email,
-        };
     }
 
     private async Task Validate(UpdateUserRequest request)

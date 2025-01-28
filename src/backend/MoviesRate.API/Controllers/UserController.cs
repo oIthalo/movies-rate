@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoviesRate.API.Attributes;
+using MoviesRate.Application.UseCases.User.Delete;
 using MoviesRate.Application.UseCases.User.Login;
 using MoviesRate.Application.UseCases.User.Register;
 using MoviesRate.Application.UseCases.User.Update;
@@ -45,7 +46,19 @@ public class UserController : MoviesRateControllerBase
         [FromServices] IUpdateUserUseCase useCase,
         [FromBody] UpdateUserRequest request)
     {
-        var result = await useCase.Execute(request);
+        await useCase.Execute(request);
+        return NoContent();
+    }
+
+    [HttpDelete]
+    [Route("delete")]
+    [IsAuth]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> Delete(
+        [FromServices] IDeleteUserUseCase useCase)
+    {
+        await useCase.Execute();
         return NoContent();
     }
 }
