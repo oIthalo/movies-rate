@@ -10,5 +10,5 @@ public class InvalidLoginException : MoviesRateException
 
     public override IList<string> GetErrorMessages() => [Message];
 
-    public override HttpStatusCode GetStatusCode() => HttpStatusCode.BadRequest;
+    public override HttpStatusCode GetStatusCode() => HttpStatusCode.Unauthorized;
 }
